@@ -14,6 +14,6 @@ RUN yum install -y epel-release \
 	&& yum update -y \
 	&& yum install -y graphviz \
 	&& yum clean all \
-	&& rm -rf /var/cache/yum /tmp/graph* /tmp/DevIL*
+	&& rm -rf /var/cache/yum 
 
 CMD ["gsh"]
