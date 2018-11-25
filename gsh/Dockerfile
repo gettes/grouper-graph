@@ -1,4 +1,4 @@
-FROM tier/grouper:2.4.0-a3-u1-w0-p0
+FROM tier/grouper:latest
 
 # this is based on the TIER Grouper Docker distribution
 
