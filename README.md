@@ -1,1 +1,30 @@
 # grouper-graph
+
+Original grouper graphing code in groovy
+
+Provided a starting point in Grouper (a group, a folder or a subject) then graph all
+	objects involved as related to the starting point.  Yes, a starting can be Root.
+This capability is particularly useful if you want to graph all the components of groups
+	used for a specific application.  As a grouper admin it helps you to determine if
+	built everything properly understanding how everything relates.  It also will help
+	an application admin understand what Grouper is doing for their application.
+
+
+run-graph.sh passes parameters into the groovy script through modified gsh container.
+The modified gsh container has graphviz built-in.  Also included InCommon certs - not really needed.
+
+sample docker-compose.yml provided so volumes and other mappings should be obvious
+
+Various ways to invoke:
+
+run-graph.sh Start:Group:or:Folder:or:Subject obtainGroupSizes SkipFolderCount
+run-graph.sh Root true 100
+run-graph.sh App:Two-Factor: false  <-- graph everything in this folder, no group counts
+run-graph.sh App:Two-Factor:Enrolled  <-- graph everything starting with this specific group
+run-graph.sh subject:gettes@ufl.edu false <-- graph all groups where the subject gettes@ufl.edu is related
+
+inspecting the run-graph.sh script and the groovy script you will see lots of options
+to control graphviz capability without having to modify the base code.
+
+Have fun truly visualizing Grouper!
+
