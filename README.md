@@ -27,6 +27,8 @@ Various ways to invoke:
 inspecting the run-graph.sh script and the groovy script you will see lots of options
 to control graphviz capability without having to modify the base code.
 
+I learned groovy to develop this capability.  My apologies if my style or implementations are sub-optimal.
+
 Have fun truly visualizing Grouper!
 
 ## LICENSE
