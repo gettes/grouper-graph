@@ -1,0 +1,66 @@
+version: "3.3"
+
+# sample docker-compose file so you see how to map certain things - adjust your environment accordingly
+# the gsho service is used when no subject source is needed - the run-graph.sh script will use gsho unless
+#	a subject is being graphed and then will use gsh which includes subject sources
+
+services:
+  gsh:
+    build: ./gsh/
+    depends_on:
+     - ldap
+     - db
+    environment:
+     - ENV=dev
+     - GROUPER_DATABASE_PASSWORD_FILE=/run/secrets/database_password.txt
+     - SUBJECT_SOURCE_LDAP_PASSWORD=password
+     - MEM_MAX=3g
+    secrets:
+     - database_password.txt
+     - source: grouper.hibernate.properties
+       target: grouper_grouper.hibernate.properties
+     - source: grouper-loader.properties
+       target: grouper_grouper-loader.properties
+     - source: subject.properties
+       target: grouper_subject.properties
+    volumes:
+     - ./configs-and-secrets/grouper/grouper.properties:/opt/grouper/conf/grouper.properties:ro
+     - ./configs-and-secrets/grouper/grouper.client.properties:/opt/grouper/conf/grouper.client.properties:ro
+     - ./configs-and-secrets/grouper/log4j.properties:/opt/grouper/conf/log4j.properties:ro
+     - ./configs-and-secrets/grouper/grouper.cache.properties:/opt/grouper/conf/grouper.cache.properties:ro
+     - ./configs-and-secrets/grouper/grouper.xml:/opt/tomcat/conf/Catalina/localhost/grouper.xml:ro
+     - ./scripts/:/app:ro
+     - ./output/:/output:rw
+     - ./ddlScripts/:/ddlScripts:rw
+
+  gsho:
+    build: ./gsh/
+    depends_on:
+     - ldap
+     - db
+    environment:
+     - ENV=dev
+     - GROUPER_DATABASE_PASSWORD_FILE=/run/secrets/database_password.txt
+     - SUBJECT_SOURCE_LDAP_PASSWORD=password
+     - MEM_MAX=3g
+    secrets:
+     - database_password.txt
+     - source: grouper.hibernate.properties
+       target: grouper_grouper.hibernate.properties
+     - source: grouper-loader.properties
+       target: grouper_grouper-loader.properties
+     - source: subject-offline.properties
+       target: grouper_subject.properties
+    volumes:
+     - ./configs-and-secrets/grouper/grouper.properties:/opt/grouper/conf/grouper.properties:ro
+     - ./configs-and-secrets/grouper/grouper.client.properties:/opt/grouper/conf/grouper.client.properties:ro
+     - ./configs-and-secrets/grouper/log4j.properties:/opt/grouper/conf/log4j.properties:ro
+     - ./configs-and-secrets/grouper/grouper.cache.properties:/opt/grouper/conf/grouper.cache.properties:ro
+     - ./configs-and-secrets/grouper/grouper.xml:/opt/tomcat/conf/Catalina/localhost/grouper.xml:ro
+     - ./scripts/:/app:ro
+     - ./output/:/output:rw
+     - ./ddlScripts/:/ddlScripts:rw
+
+secrets:
+  database_password.txt:
+    file: ./configs-and-secrets/grouper/database_password.txt
