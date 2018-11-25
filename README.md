@@ -29,7 +29,7 @@ to control graphviz capability without having to modify the base code.
 
 I learned groovy to develop this capability.  My apologies if my style or implementations are sub-optimal.
 
-Have fun truly visualizing Grouper!
+Have fun visualizing Grouper!
 
 ## LICENSE
 
